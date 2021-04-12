@@ -1,0 +1,39 @@
+<div style="text-align: center;">
+  <h2 mat-dialog-title>{{ title }} {{escalaValorativa.data[0].nombreNivelAcademico}}</h2>
+
+  <mat-dialog-content class="mat-typography">
+    <p>Asigna un valor mínimo y máximo para continuar</p>
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+      <mat-form-field appearance="fill">
+        <mat-label>Select</mat-label>
+        <mat-select>
+          <mat-option value="one">First option</mat-option>
+          <mat-option value="two">Second option</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+      <mat-form-field appearance="fill">
+        <mat-label>Input</mat-label>
+        <input matInput>
+      </mat-form-field>
+    </div>
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+      <mat-form-field appearance="fill">
+        <mat-label>Input</mat-label>
+        <input matInput>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div appearance="fill">
+      <button [disabled]='!formIsValid' type="submit" class="mr-3" mat-raised-button color="primary"
+        (click)="save()">Guardar</button>
+    </div>
+    <button class="mat-raised-button" (click)="close()"> Cancelar</button>
+  </mat-dialog-actions>
+</div>

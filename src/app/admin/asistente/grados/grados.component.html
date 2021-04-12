@@ -1,0 +1,74 @@
+<br>
+<div class="row m-1 non-selectable ">
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-6">
+      <table #tableNivelEducativo mat-table [dataSource]="dataSourceNivelEducativo" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="NivelEducativo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nivel Educativo </th>
+            <td mat-cell *matCellDef="let elementNivelEducativo"
+                (click)="getGrados(elementNivelEducativo.idNivelAcademico)">
+                {{elementNivelEducativo.nombreNivelAcademico}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsNivelEducativo"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsNivelEducativo;"
+                (click)="selectionNivelEducativo.toggle(row)"
+                [ngClass]="(IdRegistroSeleccionado == 0)?'':{hovered: row.hovered, highlighted: selectionNivelEducativo.isSelected(row)}"
+                (mouseover)="row.hovered = true" (mouseout)="row.hovered = false">
+    </table>
+      <div style="text-align: center;" class="mat-row cdk-row ng-star-inserted hovered mat-elevation-z8" *ngIf="ELEMENT_DATA_NIVELEDUCATIVO.length === 0">
+        <p class="non-selectable">&nbsp;</p>
+        <p class="non-selectable">No hay datos. Asigne niveles educativos para listar contenido</p>       
+         <p class="non-selectable">&nbsp;</p>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-3">
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-3">
+      <h4 class="color-primary" >Ciclo escolar {{asistente.nombreCicloEscolar}}</h4>
+    </div>
+</div>
+<br>
+
+<div *ngIf="toggleForm">
+    <form class="m-3 non-selectable ">
+        <table #table mat-table [dataSource]="dataSourceGrado" matSort class="mat-elevation-z8">
+            <!-- idCicloEscolar Column -->
+            <ng-container matColumnDef="seleccionar">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Seleccionar </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox [(ngModel)]="element.seleccionar" [(name)]="element.idGrado"
+                        [checked]="element.seleccionar == 1">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <!-- nombreCiclo Column -->
+            <ng-container matColumnDef="nombreGrado">
+                <th mat-header-cell *matHeaderCellDef> Nivel educativo</th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreGrado}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="orden">
+                <th mat-header-cell *matHeaderCellDef> Orden </th>
+                <td mat-cell *matCellDef="let element"> {{element.orden }} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsGrado"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsGrado;" (click)="selection.toggle(row)"
+                [ngClass]="{hovered: row.hovered, highlighted: selection.isSelected(row)}"
+                (mouseover)="row.hovered = true" (mouseout)="row.hovered = false">
+            </tr>
+
+        </table>
+        <br>
+        <div class="row justify-content-md-center">
+            <div appearance="fill">
+            </div>
+            <div appearance="fill">
+                <button class="mr-3" mat-raised-button color="primary"
+                    (click)="guardarConfiguracionGrados()">Guardar</button>
+            </div>
+        </div>
+    </form>
+
+</div>
