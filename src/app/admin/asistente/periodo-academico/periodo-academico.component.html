@@ -1,0 +1,115 @@
+<div class="row non-selectable ">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-12">
+    </div>
+</div>
+
+<div class="row non-selectable ">
+    <div class="col-xl-9 col-lg-9 col-md-6 col-sm-6 mb-9">
+        <div class="header">
+            <h4>Seleccione los periodos que desea asignar al ciclo</h4>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-3">
+        <div class="header">
+            <h4 class="color-primary">Ciclo escolar {{asistente.nombreCicloEscolar}}</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row m-1 non-selectable ">
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-12">
+        <table #tableNivelEducativo mat-table [dataSource]="dataSourceNivelEducativo" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="NivelEducativo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nivel Educativo </th>
+                <td mat-cell *matCellDef="let elementNivelEducativo"
+                    (click)="setIdNivelEducativo(elementNivelEducativo.idNivelAcademico)">
+                    {{elementNivelEducativo.nombreNivelAcademico}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsNivelEducativo"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsNivelEducativo;"
+                (click)="selectionNivelEducativo.toggle(row)"
+                [ngClass]="(IdRegistroSeleccionado == 0)?'':{hovered: row.hovered, highlighted: selectionNivelEducativo.isSelected(row)}"
+                (mouseover)="row.hovered = true" (mouseout)="row.hovered = false">
+        </table>
+        <div style="text-align: center;" class="mat-row cdk-row ng-star-inserted hovered mat-elevation-z8"
+            *ngIf="ELEMENT_DATA_NIVELEDUCATIVO.length === 0">
+            <p>&nbsp;</p>
+            <p>No hay datos. Asigne Niveles Educativos para listar contenido</p>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-12">
+        <mat-form-field>
+            <mat-label>Periodos</mat-label>
+            <mat-select #periododSelect [(value)]="selected" (selectionChange)="setIdNumeroPeriodos($event.value)">
+                <mat-option *ngFor="let ca of ELEMENT_DATA_PERIODOEDUCATIVO" [value]="ca.idPeriodo">
+                    {{ca.numeroPeriodos}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+<br>
+
+<div *ngIf="toggleForm">
+    <form class="m-3 non-selectable " [formGroup]="form" (submit)="extractDataFormToSend()">
+        <table #table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="periodo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Periodos </th>
+                <td mat-cell *matCellDef="let element"> {{element.periodo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="porcentaje">
+                <th mat-header-cell *matHeaderCellDef> Porcentaje</th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field>
+                        <input matInput placeholder="Porcentaje" autocomplete="off"
+                            [formControlName]="element.porcentaje">
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaInicio">
+                <th mat-header-cell *matHeaderCellDef> Fecha Inicio </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field>
+                        <input matInput [formControlName]="element.fechaInicio" [matDatepicker]="ffin">
+                        <mat-datepicker-toggle matSuffix [for]="ffin"></mat-datepicker-toggle>
+                        <mat-datepicker #ffin></mat-datepicker>
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaFinal">
+                <th mat-header-cell *matHeaderCellDef> Fecha Fin </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field>
+                        <input matInput [formControlName]="element.fechaFinal" [matDatepicker]="ffin">
+                        <mat-datepicker-toggle matSuffix [for]="ffin"></mat-datepicker-toggle>
+                        <mat-datepicker #ffin></mat-datepicker>
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+            </tr>
+
+        </table>
+
+        <br>
+        <div class="row justify-content-md-center">
+            <div appearance="fill">
+            </div>
+            <div appearance="fill">
+                <button [disabled]="!form.valid" type="submit" class="mr-3" mat-raised-button
+                    color="primary">Guardar</button>
+            </div>
+        </div>
+
+        <br>
+    </form>
+</div>

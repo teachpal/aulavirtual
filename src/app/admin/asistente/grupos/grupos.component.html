@@ -1,0 +1,84 @@
+<form class="m-3 non-selectable ">
+  <div class="row">
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-6">
+      <div class="header">
+        <h2>Asignar Grupos a Grados</h2>
+      </div>
+      <table #tableNivelEducativo mat-table [dataSource]="dataSourceNiveles" matSort class="mat-elevation-z8 non-selectable">
+        <ng-container matColumnDef="NivelEducativo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nivel Educativo </th>
+            <td mat-cell *matCellDef="let elementNivelEducativo"
+                (click)="setIdNivelEducativo(elementNivelEducativo.idNivelAcademico)">
+                {{elementNivelEducativo.nombreNivelAcademico}}
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsNivelEducativo"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsNivelEducativo;"
+            (click)="selectionNivelEducativo.toggle(row)"
+            [ngClass]="(IdRegistroSeleccionado == 0)?'':{hovered: row.hovered, highlighted: selectionNivelEducativo.isSelected(row)}"
+            (mouseover)="row.hovered = true" (mouseout)="row.hovered = false">
+      </table>
+      <div style="text-align: center;" class="mat-row cdk-row ng-star-inserted hovered mat-elevation-z8" *ngIf="dataTableNiveles.length === 0">
+        <p class="non-selectable">&nbsp;</p>
+        <p class="non-selectable">No hay datos. Asigne niveles educativos para listar contenido</p>       
+         <p class="non-selectable">&nbsp;</p>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-3">
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-3">
+      <h4 class="color-primary" >Ciclo escolar {{asistente.nombreCicloEscolar}}</h4>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-12">
+      
+      <table #tableGrupos mat-table [dataSource]="dataSourceGrupos" matSort class="mat-elevation-z8 non-selectable">
+        <ng-container matColumnDef="Grado">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Grado </th>
+            <td mat-cell *matCellDef="let elementGrupo">
+                {{elementGrupo.nombreGrado}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Grupo A">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Grupo A</th>
+          <td mat-cell *matCellDef="let elementGrupo">
+            <mat-checkbox (change)="changeA(elementGrupo.a, elementGrupo.idNIvelAcademico, elementGrupo.idGrado)"  [(ngModel)]="elementGrupo.a" [(name)]="'a_'+elementGrupo.idGrado" [checked]="elementGrupo.a == 1">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Grupo B">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Grupo B</th>
+          <td mat-cell *matCellDef="let elementGrupo">
+            <mat-checkbox [(ngModel)]="elementGrupo.b" [(name)]="'b_'+elementGrupo.idGrado"  [checked]="elementGrupo.b == 1" [disabled]="elementGrupo.a === null  || elementGrupo.a === false || elementGrupo.a === 0">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Grupo C">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Grupo C</th>
+          <td mat-cell *matCellDef="let elementGrupo">
+            <mat-checkbox  (change)="changeB(elementGrupo.a, elementGrupo.idNIvelAcademico, elementGrupo.idGrado)" [(ngModel)]="elementGrupo.c" [(name)]="'c_'+elementGrupo.idGrado"  [checked]="elementGrupo.c == 1" [disabled]="elementGrupo.a === null  || elementGrupo.a === false || elementGrupo.a === 0 || elementGrupo.b === null  || elementGrupo.b === false || elementGrupo.b === 0">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsGrupos"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsGrupos;"
+            [ngClass]="{hovered: row.hovered}"
+            (mouseover)="row.hovered = true" (mouseout)="row.hovered = false">
+      </table>
+      <div style="text-align: center;" class="mat-row cdk-row ng-star-inserted hovered mat-elevation-z8" *ngIf="dataTableGrupos.length === 0">
+        <p class="non-selectable">&nbsp;</p>
+        <p class="non-selectable" *ngIf=" this.idNivelSeleccionado === 0">No hay datos. Seleccione un nivel educativo para listar contenido.</p>
+        <p class="non-selectable" *ngIf=" this.idNivelSeleccionado > 0">No hay datos. Asigne grados a este nivel educativo para listar contenido.</p>
+        <p class="non-selectable">&nbsp;</p>
+      </div>
+    </div>
+  </div>
+</form>
+<br>
+<div class="row justify-content-md-center non-selectable ">
+    <div appearance="fill">
+      <button class="mr-3" mat-raised-button color="primary" (click)="save()"> Guardar</button>
+    </div>
+</div>

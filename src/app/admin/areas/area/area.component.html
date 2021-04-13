@@ -1,0 +1,42 @@
+<mat-form-field floatLabel=never>
+    <input matInput type="text" class="form-control" placeholder="Buscar..." (input)="filterChange($event)">
+</mat-form-field>
+<table #table mat-table [dataSource]="dataSourceAreas" matSort class="mat-elevation-z8">
+    <!-- idCicloEscolar Column -->
+    <ng-container matColumnDef="activo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Activo </th>
+        <td mat-cell *matCellDef="let element">
+            <mat-checkbox [(ngModel)]="element.activo" disabled="true" [(name)]="element.activo" [checked]="element.activo == 1">
+            </mat-checkbox>
+        </td>
+    </ng-container>
+
+    <!-- nombreCiclo Column -->
+    <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre</th>
+        <td mat-cell *matCellDef="let element"> {{element.nombreArea}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row);seleccionarArea(row)" [ngClass]="{hovered: row.hovered, highlighted: selection.isSelected(row)}" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false">
+    </tr>
+
+</table>
+<hr>
+<br>
+<mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+<div class="row justify-content-md-center">
+    <div class="row justify-content-md-center">
+        <div appearance="fill">
+            <button class="mr-3" mat-raised-button color="primary" (click)="nuevo()">Agregar</button>
+        </div>
+        <div appearance="fill">
+            <button [disabled]="idArea == 0" (click)="editar()" class="mr-3" mat-raised-button color="primary">Editar</button>
+        </div>
+        <!--<div appearance="fill">
+            <button [disabled]="IdRegistroSeleccionado == 0" (click)="activar()" class="mr-3" mat-raised-button
+                color="primary">Activar</button>
+        </div> -->
+    </div>
+</div>

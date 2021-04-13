@@ -1,0 +1,13 @@
+<mat-dialog-content class="mat-typography">
+
+  <h2 mat-dialog-title>{{ title }} {{nombreCicloEscolar}}</h2>
+  <p>¿Está seguro de Activar el ciclo escolar {{nombreCicloEscolar}} ?</p>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <div appearance="fill">
+    <button class="mr-3" mat-raised-button color="primary"  (click)="activar()" >Activar</button>
+  </div>
+  <button class="mat-raised-button" (click)="close()"> Cancelar</button>
+</mat-dialog-actions>

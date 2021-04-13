@@ -1,0 +1,53 @@
+<div style="text-align: center;">
+    <h2 mat-dialog-title>Guardar Asignatura</h2>
+
+    <mat-dialog-content class="mat-typography">
+        <!-- <p>Guardar nueva area</p> -->
+        <form class="m-4" [formGroup]="areaForm">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                <mat-form-field appearance="fill">
+                    <mat-label>Areas</mat-label>
+                    <mat-select #areaSelect  formControlName="idArea">
+                        <mat-option *ngFor="let area of ELEMENT_DATA_AREA" [value]="area.idArea">
+                            {{area.nombreArea}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label> <strong>Asignatura</strong></mat-label>
+                    <input matInput placeholder="Nombre" autocomplete="off" formControlName="nombre">
+                </mat-form-field>
+                <mat-error
+                    *ngIf="areaForm.get('nombre').hasError('required') && (areaForm.get('nombre').dirty || areaForm.get('nombre').touched)">
+                    El nombre de la asignatura es requerido
+                </mat-error>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label> <strong>Abreviatura</strong></mat-label>
+                    <input matInput type="text" maxlength="4" placeholder="Abreviatura" autocomplete="off" formControlName="abreviatura">
+                </mat-form-field>
+                <mat-error
+                    *ngIf="areaForm.get('abreviatura').hasError('required') && (areaForm.get('abreviatura').dirty || areaForm.get('abreviatura').touched)">
+                    El nombre de la abreviatura es requerido y no debe ser mayor a 4 dígitos
+                </mat-error>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                <section class="example-full-width" appearance="fill">
+                    <mat-checkbox formControlName="activar"><strong class="txtActivar"> Activar</strong></mat-checkbox>
+                </section>
+            </div>
+        </form>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <div appearance="fill">
+            <button [disabled]='!areaForm.valid' type="submit" class="mr-3" mat-raised-button color="primary"
+                (click)="guardarAsignatura()">Guardar</button>
+        </div>
+        <button class="mat-raised-button" (click)="closeModal(false, false)"> Cancelar</button>
+    </mat-dialog-actions>
+</div>
